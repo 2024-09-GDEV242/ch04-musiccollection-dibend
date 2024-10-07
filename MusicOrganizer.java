@@ -26,6 +26,7 @@ public class MusicOrganizer
         tracks = new ArrayList<>();
         player = new MusicPlayer();
         reader = new TrackReader();
+        random = new Random();
         readLibrary("../audio");
         System.out.println("Music library loaded. " + getNumberOfTracks() + " tracks.");
         System.out.println();
@@ -170,6 +171,23 @@ public class MusicOrganizer
         // Put all thetracks into the organizer.
         for(Track track : tempTracks) {
             addTrack(track);
+        }
+    }
+    
+    public void shuffle()
+    {
+        if (!tracks.isEmpty()) {
+            // Generate a random index between 0 and tracks.size() - 1
+            int randomIndex = random.nextInt(tracks.size() - 1);
+            // Retrieve the track at the random index
+            Track track = tracks.get(randomIndex);
+            // Play the selected track
+            player.playSample(track.getFilename());
+            // Print information about the track being played
+            System.out.println("Now playing: " + track.getArtist() + " - " + track.getTitle());
+        } else {
+            // Print a message if there are no tracks to play
+            System.out.println("No tracks to play.");
         }
     }
 }
