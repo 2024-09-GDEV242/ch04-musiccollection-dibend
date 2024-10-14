@@ -196,4 +196,48 @@ public class MusicOrganizer
         }
     }
 
+    /**
+ * Play all tracks in the collection in a random order.
+ */
+public void shuffle() {
+    // Create a new ArrayList to store the tracks in a random order
+    ArrayList<Track> shuffledTracks = new ArrayList<Track>();
+
+    // Copy the tracks from the original collection to the new collection
+    shuffledTracks.addAll(tracks);
+
+    // Clear the original collection
+    tracks.clear();
+
+    // Play all tracks in the shuffled collection
+    while (!shuffledTracks.isEmpty()) {
+        // Use the existing random object to generate a random index
+        int randomIndex = random.nextInt(shuffledTracks.size());
+
+        // Retrieve the track at the random index
+        Track track = shuffledTracks.get(randomIndex);
+
+        // Play the selected track
+        player.startPlaying(track.getFilename());
+        System.out.println("Now playing: " + track.getArtist() + " - " + track.getTitle());
+
+        // Sleep for 10 seconds
+        try {
+            Thread.sleep(10000); // Sleep for 10,000 milliseconds = 10 seconds
+        } catch (InterruptedException e) {
+            // Handle interruption
+            Thread.currentThread().interrupt();
+            System.out.println("Playback interrupted");
+        }
+
+        // Stop the playing track after 10 seconds
+        player.stop();
+        System.out.println("Stopped playing: " + track.getArtist() + " - " + track.getTitle());
+
+        // Remove the track from the shuffled collection
+        shuffledTracks.remove(randomIndex);
+    }
+}
+
+
 }
